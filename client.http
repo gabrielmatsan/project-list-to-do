@@ -1,0 +1,45 @@
+@baseUrl = http://localhost:3333
+
+# @name create_goal
+
+POST {{baseUrl}}/goals
+Content-Type: application/json
+
+{
+    "title": "fazer todas as tarefas",
+    "desiredWeeklyFrequency": 5
+}
+
+###
+
+# @name pending_goals
+
+GET {{baseUrl}}/pending-goals
+Content-Type: application/json
+
+{
+    
+}
+
+###
+
+# @name create_goal_completions
+
+POST {{baseUrl}}/completions
+Content-Type: application/json
+
+{
+    "goalId": "zc8wkmj3w0vlb3c828ghc4k4"
+}
+
+###
+
+# @name get_weekly_summary
+
+GET {{baseUrl}}/week-summary
+Content-Type: application/json
+
+{
+
+}
+
