@@ -1,5 +1,5 @@
 {
-  "id": "f85550ab-68d2-4ab0-a04d-109af0108f8b",
+  "id": "6ecf4377-5dca-45f5-bc69-0f0873d2fc64",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -12,6 +12,12 @@
           "name": "id",
           "type": "text",
           "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "title": {
@@ -35,9 +41,120 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "goals_user_id_users_id_fk": {
+          "name": "goals_user_id_users_id_fk",
+          "tableFrom": "goals",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.goals_completions": {
+      "name": "goals_completions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "goal_id": {
+          "name": "goal_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "goals_completions_goal_id_goals_id_fk": {
+          "name": "goals_completions_goal_id_goals_id_fk",
+          "tableFrom": "goals_completions",
+          "tableTo": "goals",
+          "columnsFrom": [
+            "goal_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "external_account_id": {
+          "name": "external_account_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_external_account_id_unique": {
+          "name": "users_external_account_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "external_account_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

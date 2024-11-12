@@ -5,10 +5,12 @@ import { count, and, gte, lte, eq, sql } from 'drizzle-orm'
 
 interface CreateGoalCompletionRequest {
   goalId: string
+  userId: string
 }
 
 export async function CreateGoalsCompletions({
   goalId,
+  userId,
 }: CreateGoalCompletionRequest) {
   const firstDayOfWeek = dayjs().startOf('week').toDate()
   const lastDayOfWeek = dayjs().endOf('week').toDate()
@@ -20,11 +22,13 @@ export async function CreateGoalsCompletions({
         completionCount: count(goalsCompletions.id).as('completionCount'),
       })
       .from(goalsCompletions)
+      .innerJoin(goals, eq(goals.id, goalsCompletions.goalId))
       .where(
         and(
           gte(goalsCompletions.createdAt, firstDayOfWeek),
           lte(goalsCompletions.createdAt, lastDayOfWeek),
-          eq(goalsCompletions.goalId, goalId)
+          eq(goalsCompletions.goalId, goalId),
+          eq(goals.userId, userId)
         )
       )
       .groupBy(goalsCompletions.goalId)
@@ -38,7 +42,7 @@ export async function CreateGoalsCompletions({
         COALESCE(${goalCompletionsCounts.completionCount}, 0)`.mapWith(Number),
     })
     .from(goals)
-    .where(eq(goals.id, goalId))
+    .where(and(eq(goals.id, goalId), eq(goals.userId, userId)))
     .leftJoin(goalCompletionsCounts, eq(goals.id, goalCompletionsCounts.goalId))
     .limit(1)
 
