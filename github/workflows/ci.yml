@@ -1,7 +1,10 @@
 name: Run tests
 
-on: push
-
+on:
+  push:
+    branches:
+      - main
+      - dev  
 jobs:
   run-ci:
     name: Run tests
@@ -23,13 +26,17 @@ jobs:
           --health-retries 10
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v3  
 
-      - uses: actions/setup-node@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - run: pnpm ci
+      - name: Install dependencies
+        run: pnpm install  
 
-      - run: pnpm run test
+      - name: Run tests
+        run: pnpm run test
