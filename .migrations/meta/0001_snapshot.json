@@ -1,6 +1,6 @@
 {
-  "id": "72b1620d-35bc-4373-8b3c-75f9017042c0",
-  "prevId": "6ecf4377-5dca-45f5-bc69-0f0873d2fc64",
+  "id": "19ea01be-4366-48ec-a376-1ed69695ea17",
+  "prevId": "c96081f7-dab4-4969-9fc6-68f84ccfa7fc",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -135,6 +135,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "experience": {
+          "name": "experience",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
         },
         "external_account_id": {
           "name": "external_account_id",

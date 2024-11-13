@@ -9,18 +9,21 @@
     "db:migrate:test": "dotenv -e .env.test -- drizzle-kit migrate",
     "pretest": "pnpm run db:migrate:test",
     "pretest:watch": "pnpm run watch db:migrate:test",
-    "test": "vitest run",
-    "test:watch": "vitest watch"
+    "test": "dotenv -e .env.test -- vitest run",
+    "test:watch": "dotenv -e .env.test -- vitest watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@faker-js/faker": "^9.2.0",
     "@types/node": "22.9.0",
     "dotenv-cli": "^7.4.2",
     "tsx": "4.19.2",
     "typescript": "5.6.3",
+    "unplugin-swc": "^1.5.1",
+    "vite-tsconfig-paths": "^5.1.2",
     "vitest": "^2.1.4"
   },
   "dependencies": {

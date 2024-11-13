@@ -8,13 +8,17 @@ dayjs.extend(weekOfYear)
 
 export interface GetWeekSummaryRequest {
   userId: string
+  weekStartsAt: Date
 }
 
-export async function getWeekSummary({ userId }: GetWeekSummaryRequest) {
-  const firstDayOfWeek = dayjs().startOf('week').toDate()
-  const lastDayOfWeek = dayjs().endOf('week').toDate()
+export async function getWeekSummary({
+  userId,
+  weekStartsAt,
+}: GetWeekSummaryRequest) {
+  const firstDayOfWeek = weekStartsAt
+  const lastDayOfWeek = dayjs(weekStartsAt).endOf('week').toDate()
 
-  const goaslCreatedUpToWeek = db.$with('goals_created_up_to_week').as(
+  const goalsCreatedUpToWeek = db.$with('goals_created_up_to_week').as(
     db
       .select({
         id: goals.id,
@@ -77,13 +81,13 @@ export async function getWeekSummary({ userId }: GetWeekSummaryRequest) {
   >
 
   const result = await db
-    .with(goaslCreatedUpToWeek, goalsCompletedThisWeek, goalsCompletedByWeekDay)
+    .with(goalsCreatedUpToWeek, goalsCompletedThisWeek, goalsCompletedByWeekDay)
     .select({
       completed: sql /*sql*/`
         (SELECT COUNT(*) FROM ${goalsCompletedThisWeek})
       `.mapWith(Number),
       total: sql /*sql*/`
-      (SELECT SUM(${goaslCreatedUpToWeek.desiredWeeklyFrequency}) FROM ${goaslCreatedUpToWeek})
+      (SELECT SUM(${goalsCreatedUpToWeek.desiredWeeklyFrequency}) FROM ${goalsCreatedUpToWeek})
     `.mapWith(Number),
       goalsPerDay: sql /*sql*/<GoalsPerDay>`
         JSON_OBJECT_AGG(

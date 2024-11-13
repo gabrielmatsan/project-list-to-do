@@ -1,5 +1,5 @@
 {
-  "id": "6ecf4377-5dca-45f5-bc69-0f0873d2fc64",
+  "id": "c96081f7-dab4-4969-9fc6-68f84ccfa7fc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -128,7 +128,7 @@
           "name": "email",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "avatar_url": {
           "name": "avatar_url",

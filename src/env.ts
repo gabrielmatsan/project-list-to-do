@@ -1,6 +1,7 @@
 import z from 'zod'
 
 const envSchema = z.object({
+  NODE_ENV: z.enum(['dev', 'test', 'production']).optional().default('dev'),
   DATABASE_URL: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
   GITHUB_CLIENT_ID: z.string(),
