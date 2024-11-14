@@ -34,15 +34,16 @@ jobs:
         run: echo "SHELL=/bin/bash" >> $GITHUB_ENV
 
       - name: Install pnpm
-        run: curl -fsSL https://get.pnpm.io/install.sh | sh
-
-      - name: Add pnpm to PATH
         run: |
+          curl -fsSL https://get.pnpm.io/install.sh | sh
           export PNPM_HOME="$HOME/.local/share/pnpm"
           export PATH="$PNPM_HOME:$PATH"
-          echo "export PNPM_HOME=$PNPM_HOME" >> $GITHUB_ENV
-          echo "export PATH=$PNPM_HOME:$PATH" >> $GITHUB_ENV
-          
+          echo "PNPM_HOME=$PNPM_HOME" >> $GITHUB_ENV
+          echo "PATH=$PNPM_HOME:$PATH" >> $GITHUB_ENV
+
+      - name: Load pnpm into PATH
+        run: source $GITHUB_ENV
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
