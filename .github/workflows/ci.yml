@@ -30,6 +30,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
+      - name: Set SHELL environment variable
+        run: echo "SHELL=/bin/bash" >> $GITHUB_ENV
+
       - name: Install pnpm
         run: curl -fsSL https://get.pnpm.io/install.sh | sh
 
